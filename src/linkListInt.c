@@ -3,7 +3,7 @@
 #include<stdlib.h>
 
 
-int empty(nodeInt* root) {
+int emptyChar(nodeInt* root) {
   if(root == NULL)
     return 1;
   return 0;
@@ -28,7 +28,7 @@ nodeInt* searchNode(nodeInt *root, int trang) {
   return node;
 }
 void addListInt(nodeInt** root, int trang) {
-  if(empty(*root)) {
+  if(emptyChar(*root)) {
     *root = initNode(trang);
   } else {
     nodeInt *node = initNode(trang), *prev, *cur = *root;
