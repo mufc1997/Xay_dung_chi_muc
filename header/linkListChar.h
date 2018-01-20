@@ -7,7 +7,7 @@ typedef struct nodeChar {
   struct nodeChar* next;
 } nodeChar;
 
-int emptyChar(nodeInt* root);
+int emptyChar(nodeChar* root);
 nodeChar* initNodeChar(char *tungu, int sodong);
 nodeChar* searchNodeChar(nodeChar *root, char *tungu);
 void addListChar(nodeChar** root, char *tungu, int sodong);

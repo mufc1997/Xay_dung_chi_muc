@@ -1,9 +1,6 @@
-#include <stdio.h>
 #include "../header/linkListInt.h"
-#include<stdlib.h>
 
-
-int emptyChar(nodeInt* root) {
+int empty(nodeInt* root) {
   if(root == NULL)
     return 1;
   return 0;
@@ -28,10 +25,10 @@ nodeInt* searchNode(nodeInt *root, int trang) {
   return node;
 }
 void addListInt(nodeInt** root, int trang) {
-  if(emptyChar(*root)) {
+  if(empty(*root)) {
     *root = initNode(trang);
   } else {
-    nodeInt *node = initNode(trang), *prev, *cur = *root;
+    nodeInt *node = initNode(trang), *cur = *root, *prev = cur;;
     if(searchNode(*root, trang) != NULL)
       return;
     if((*root) -> next == NULL) {
@@ -50,8 +47,14 @@ void addListInt(nodeInt** root, int trang) {
           prev -> next = node;
         }
       } else if(cur -> trang > trang){
-        prev -> next = node;
-        node -> next = cur;
+        if(cur != (*root)) {
+          prev -> next = node;
+          node -> next = cur;
+        } else {
+          node -> next = *root;
+          *root = node;
+        }
+        return;
       }
       cur = cur -> next;
     }
@@ -61,7 +64,10 @@ void addListInt(nodeInt** root, int trang) {
 void printListInt(nodeInt *root) {
   nodeInt *cur = root;
   while(cur != NULL) {
-    printf("%d\n", cur -> trang);
+    printf("%d ", cur -> trang);
+    if(cur -> next == NULL) {
+      printf(" \n");
+    }
     cur = cur -> next;
   }
 }

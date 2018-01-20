@@ -1,16 +1,13 @@
-#include <stdio.h>
 #include "../header/linkListChar.h"
-#include<stdlib.h>
-#include<string.h>
 
-int empty(nodeChar* root) {
+int emptyChar(nodeChar* root) {
   if(root == NULL)
     return 1;
   return 0;
 }
 
 nodeChar* initNodeChar(char *tungu, int sodong) {
-  nodeChar *root = malloc(sizeof(nodeInt));
+  nodeChar *root = malloc(sizeof(nodeChar));
   root -> tungu = malloc(sizeof(char) * 30);
   strcpy(root -> tungu, tungu);
   root -> danhsachlap = NULL;
@@ -23,7 +20,7 @@ nodeChar* initNodeChar(char *tungu, int sodong) {
 nodeChar* searchNodeChar(nodeChar *root, char *tungu) {
   nodeChar *node = NULL, *cur = root;
   while(cur != NULL) {
-    if(strcmp(root -> tungu, tungu) == 0) {
+    if(strcmp(cur -> tungu, tungu) == 0) {
       node = cur;
       break;
     }
@@ -33,16 +30,16 @@ nodeChar* searchNodeChar(nodeChar *root, char *tungu) {
 }
 void addListChar(nodeChar** root, char *tungu, int sodong) {
   nodeChar *searchNode;
-  if(empty(*root)) {
+  if(emptyChar(*root)) {
     *root = initNodeChar(tungu, sodong);
   } else {
+
     nodeChar *node = initNodeChar(tungu, sodong), *prev, *cur = *root;
     if((searchNode = searchNodeChar(*root, tungu)) != NULL) {
-      searchNode -> solanlap++;
+      (searchNode -> solanlap)++;
       addListInt(&(searchNode -> danhsachlap), sodong);
       return;
     }
-
     if((*root) -> next == NULL) {
       if(strcmp((*root) -> tungu, tungu) < 0) {
         (*root) -> next = node;
@@ -58,21 +55,29 @@ void addListChar(nodeChar** root, char *tungu, int sodong) {
         if(cur -> next == NULL) {
           prev -> next = node;
         }
-      } else if(strcmp(cur -> tungu, tungu) < 0){
-        prev -> next = node;
-        node -> next = cur;
+      } else if(strcmp(cur -> tungu, tungu) > 0){
+        if(cur != (*root)) {
+          prev -> next = node;
+          node -> next = cur;
+        } else {
+          node -> next = *root;
+          *root = node;
+        }
+        return;
       }
       cur = cur -> next;
     }
+
   }
 }
 
 void printListChar(nodeChar *root) {
   nodeChar *cur = root;
+  printf("%-30s | %-10s | %-10s |\n", "Tu", "So lan lap", "Danh sach lap");
+  printf("===========================================================\n");
   while(cur != NULL) {
-    printf("Tu:  %s\n", cur -> tungu);
-    printf("So lan lap: %d\n", cur -> solanlap);
-    printf("Danh sach lap: \n\t");
+    printf("%-30s | ", cur -> tungu);
+    printf("%-10d | ", cur -> solanlap);
     printListInt(cur -> danhsachlap);
     cur = cur -> next;
   }
